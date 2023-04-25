@@ -1,35 +1,82 @@
 function Api(param){
     this.api = param.api
-    this.pag = document.getElementById(param.pag)
+    this.pag = document.getElementById(param.pag);
 }
 Api.prototype.styles = function(){
     let tag = document.querySelectorAll(".tag")
     let tags = [...tag]
     tags.map(e => {
-        e.style.color = "red";
-        e.style.margin = "10px";
-        e.style.backgroundColor = "white";
-        e.style.width = "20%";
-        e.style.padding = "20px";
-        e.style.borderRadius = "10px";
-        e.style.boxShadow = "0 0 5px black "
+        e.className = "tag"
+        e.addEventListener("click", () => {
+            if(e.className.split(" ").indexOf("imagen") != -1){
+                e.className = "tag";
+            }
+            else{
+                e.className += " imagen";
+            }
+        })
+        e.addEventListener("mouseout", () => {
+            e.className = "tag";
+        })
     })
 }
+
 Api.prototype.Get = async function(){
-    try{
-        let data = await fetch(this.api);
-        let json = await data.json();
-        json.results.map(e => {
-            this.pag.innerHTML += `<div class = 'tag'> <div class = 'id'>${e["id"]}</div><div class = "name"> ${e["name"]} </name><img src = "${e["image"]}">status: ${e["status"]}`;
+        let search = document.getElementById("search")
+        let api = this.api
+        search.addEventListener("keydown", async(ev) => {
+        this.pag.innerHTML = ""
+        })
+        search.addEventListener("keyup", async(ev) => {
+            this.pag.innerHTML = ""
+            console.log(search.value)
+            var data = await fetch(api+"?name="+search.value);
+            var json = await data.json();
+            json.results.map(e => {
+            this.pag.innerHTML += `<div class = 'tag'> 
+            <div class = 'id'>
+            ${e["id"]}
+            </div>
+            <div class = "name">
+            ${e["name"]} </div>
+            <img src = "${e["image"]}">
+            status: ${e["status"]}<br> 
+            Specie: ${e["species"]}`;
         })
         this.styles()
-        return json.results
-    }catch(err){
-        return err;
-    }
+        })
+}
+Api.prototype.init = async function(page = 1){
+    var data = await fetch(this.api + "?page="+page);
+            var json = await data.json();
+            json.results.map(e => {
+            this.pag.innerHTML += `<div class = 'tag'> 
+            <div class = 'id'>
+            ${e["id"]}
+            </div>
+            <div class = "name">
+            ${e["name"]} </div>
+            <img src = "${e["image"]}">
+            status: ${e["status"]}<br> 
+            Specie: ${e["species"]}`;
+        })
+        this.styles()
 }
 Api.prototype.up = async function(){
-    return this.Get()
+    try{
+        let right = document.getElementById("right")
+        let index = 1;
+        this.init(index)
+        right.addEventListener("click",() => {
+            this.pag.innerHTML = ""
+            index++;
+            this.init(index)
+        })
+        this.Get()    
+    }catch(err){
+        console.log(err)
+    }
+    
 } 
 const api = new Api({api:"https://rickandmortyapi.com/api/character", pag:"parametros"});
-console.log(api.up());
+api.up()

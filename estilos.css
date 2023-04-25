@@ -6,6 +6,48 @@ body{
     display: flex;
     flex-wrap: wrap;
     background-color: rgb(191, 195, 199);
+    font-family: Arial;
+}
+.buscador{
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+}
+.buscador input{
+    border: none;
+    height: 35px;
+
+}
+.title{
+    padding: 10px;
+    font-size: 46px;
+}
+.btn-conten{
+    width: 100%;
+}
+.btn-conten button{
+    width: 50%;
+    display: flex;
+    border: none;
+    height: 50px;
+}
+.tag{
+    color: red;
+    margin: 10px;
+    background-color: white;
+    width: 20%;
+    padding: 20px;
+    box-shadow: 0 0 5px black ;
+    transition: 300ms all ease;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.imagen:hover {
+    transition: 300ms all ease;
+    -webkit-transform: rotateY(180deg);
+    -webkit-transform-style: preserve-3d;
+    transform: rotateY(180deg);
+    transform-style: preserve-3d;
 }
 #parametros{
     width: 100%;
