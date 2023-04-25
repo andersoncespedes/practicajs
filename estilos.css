@@ -5,8 +5,8 @@
 body{
     display: flex;
     flex-wrap: wrap;
-    background-color: rgb(191, 195, 199);
     font-family: Arial;
+    background: linear-gradient(to top right, rgb(255, 251, 0),rgb(0, 183, 255) );
 }
 .buscador{
     width: 100%;
@@ -15,27 +15,60 @@ body{
 }
 .buscador input{
     border: none;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: white;
     height: 35px;
-
+    width: 40%;
+    border-radius: 10px;
+}
+#gif-ap{
+    position:absolute;
+    left: 800px;
+    height: 300px;
+    width: 300px;
+    opacity: 0;
+    transition: 800ms all ease;
 }
 .title{
     padding: 10px;
     font-size: 46px;
+    transition: 800ms all ease;
 }
-.btn-conten{
+.btn-cont{
     width: 100%;
+    text-align: center;
 }
-.btn-conten button{
-    width: 50%;
-    display: flex;
+.btn-cont button{
+    cursor: pointer;
     border: none;
-    height: 50px;
+    font-size: 50px;
+    margin: 40px;
+    height: 60px;
+    color: white;
+    transition: 300ms all ease;
+}
+.btn-cont button:hover{
+    box-shadow: 2px 4px 8px;
+}
+.btn-cont #left{
+    transform: skew(20deg);
+    background: rgb(122, 10, 10);
+    
+}
+.btn-cont #right{
+    transform: skew(-20deg);
+    background: rgb(122, 10, 10);
+    
+}
+.btn-cont button:hover{
+    color: red;
 }
 .tag{
-    color: red;
+    color: white;
     margin: 10px;
-    background-color: white;
-    width: 20%;
+    font-family: Arial;
+    background-color: black;
+    width: 28%;
     padding: 20px;
     box-shadow: 0 0 5px black ;
     transition: 300ms all ease;
@@ -43,11 +76,20 @@ body{
     cursor: pointer;
 }
 .imagen:hover {
-    transition: 300ms all ease;
+    transition: 700ms all ease;
     -webkit-transform: rotateY(180deg);
     -webkit-transform-style: preserve-3d;
     transform: rotateY(180deg);
     transform-style: preserve-3d;
+}
+.title-img{
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    cursor: pointer;
+}
+.title-img img{
+    width: 50%;
 }
 #parametros{
     width: 100%;
@@ -55,4 +97,5 @@ body{
     flex-wrap: wrap;
     width: 80%;
     margin: auto;
+    transition: 300ms all ease;
 }

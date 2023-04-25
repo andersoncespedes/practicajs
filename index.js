@@ -20,10 +20,9 @@ Api.prototype.styles = function(){
         })
     })
 }
-
 Api.prototype.Get = async function(){
         let search = document.getElementById("search")
-        let api = this.api
+        let api = this.api;
         search.addEventListener("keydown", async(ev) => {
         this.pag.innerHTML = ""
         })
@@ -39,7 +38,7 @@ Api.prototype.Get = async function(){
             </div>
             <div class = "name">
             ${e["name"]} </div>
-            <img src = "${e["image"]}">
+            <img src = "${e["image"]}" style = "width:100%; border-radius:20px">
             status: ${e["status"]}<br> 
             Specie: ${e["species"]}`;
         })
@@ -56,17 +55,34 @@ Api.prototype.init = async function(page = 1){
             </div>
             <div class = "name">
             ${e["name"]} </div>
-            <img src = "${e["image"]}">
+            <img src = "${e["image"]}" style = "width:100%; border-radius:20px">
             status: ${e["status"]}<br> 
             Specie: ${e["species"]}`;
         })
         this.styles()
 }
+Api.prototype.title =  function(){
+    let tit = document.getElementById("tit");
+    let gif = document.getElementById("gif-ap");
+    let count = 0
+    tit.addEventListener("click", () => {
+        count++;
+        console.log(count)
+        if(count > 5){
+            gif.style.opacity = "1";
+            tit.style.opacity = "0";
+            count = 0;
+            setTimeout(() => {
+                gif.style.opacity = "0";
+                tit.style.opacity = "1";
+            }, 4000);
+        }
+    })
+}
 Api.prototype.up = async function(){
     try{
         let right = document.getElementById("right")
         let left = document.getElementById("left")
-
         let index = 1;
         this.init(index)
         right.addEventListener("click",() => {
@@ -77,9 +93,13 @@ Api.prototype.up = async function(){
         left.addEventListener("click", () => {
             this.pag.innerHTML = ""
             index--;
+            if(index <= 1){
+                index = 1;
+            }
             this.init(index);
         })
         this.Get()    
+        this.title()
     }catch(err){
         console.log(err)
     }
