@@ -65,12 +65,19 @@ Api.prototype.init = async function(page = 1){
 Api.prototype.up = async function(){
     try{
         let right = document.getElementById("right")
+        let left = document.getElementById("left")
+
         let index = 1;
         this.init(index)
         right.addEventListener("click",() => {
             this.pag.innerHTML = ""
             index++;
-            this.init(index)
+            this.init(index);
+        })
+        left.addEventListener("click", () => {
+            this.pag.innerHTML = ""
+            index--;
+            this.init(index);
         })
         this.Get()    
     }catch(err){
