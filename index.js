@@ -10,27 +10,22 @@ Api.prototype.styles = function(){
         let id = e.querySelector(".id");
         e.className = "tag";
         e.addEventListener("click", () => {
-              if(hid.className == "id"){
+              if(hid.className == "id ap"){
                 hid.className = "id_hidden";
                 id.className = "id"
             }
             else{
                 hid.className = "id";
+                hid.className += " ap"
                 id.className = "id_hidden"
             }
             if(e.className.split(" ").indexOf("imagen") != -1){
                 e.className = "tag";
-                }
+            }
              else{
                 e.className += " imagen";
             } 
           
-        })
-        e.addEventListener("mouseout", () => {
-            e.className = "tag";
-            hid.className = "id_hidden";
-            id.className = "id"
-            
         })
     })
 }
@@ -45,42 +40,64 @@ Api.prototype.Get = async function(){
             console.log(search.value)
             var data = await fetch(api+"?name="+search.value);
             var json = await data.json();
-            json.results.map(e => {
-            this.pag.innerHTML += `<div class = 'tag'> 
-            <div class = 'id'>
-                ${e["id"]}
-                <div class = "name">
-                ${e["name"]} </div>
-                <img src = "${e["image"]}" style = "width:100%; border-radius:20px">
-                status: ${e["status"]}<br> 
-                Specie: ${e["species"]}
-            </div>
-            <div class = "id_hidden" >
-                jaslkdjask
+            json.results.map(async (e, i) => {
+            this.pag.innerHTML += `
+            <div class = 'tag'> 
+                <div class = 'id'>
+                    ${e["id"]}
+                    <div class = "name">
+                    ${e["name"]} </div>
+                    <hr>
+                    <img src = "${e["image"]}" style = "width:100%; border-radius:20px">
+                    status: ${e["status"]}<br> 
+                    Specie: ${e["species"]}
+                </div>
+                <span class = "id_hidden" >
+                    episodes:<span class = "ep"></span>
+                </div>
             </div>
             `;
+            e["episode"].map( async (e,ip) => {
+                let arr = await fetch(e);
+                let j = await arr.json()
+                document.getElementsByClassName("ep")[i].innerHTML +="<br>"+ ip + " " +j.name + "<br>"
+            });
         })
-        this.styles()
+        this.styles()   
         })
+     
 }
 Api.prototype.init = async function(page = 1){
     var data = await fetch(this.api + "?page="+page);
             var json = await data.json();
-            json.results.map(e => {
-            this.pag.innerHTML += `<div class = 'tag'> 
-            <div class = 'id'>
-                ${e["id"]}
-                <div class = "name">
-                ${e["name"]} </div>
-                <img src = "${e["image"]}" style = "width:100%; border-radius:20px">
-                status: ${e["status"]}<br> 
-                Specie: ${e["species"]}
-            </div>
-            <div class = "id_hidden">
-                jaslkdjask
+            json.results.map(async (e,i) => {
+            var arr = ""
+            console.log(e.species)
+            this.pag.innerHTML += `
+            <div class = 'tag'> 
+                <div class = 'id'>
+                    ${e["id"]}
+                    <hr>
+                    <div class = "name">
+                    ${e["name"]} </div>
+                    
+                    <img src = "${e["image"]}" style = "width:100%; border-radius:20px">
+                    Status: ${e["status"]}<br> 
+                    Specie: ${e["species"]}
+                </div>
+                <div class = "id_hidden">
+                    episodes:<span class = "ep"></span>
+                </div>
             </div>
             `;
-
+            let count = 0
+            e["episode"].map( async (e,ip) => {
+                let arr = await fetch(e);
+                let j = await arr.json()
+                console.log(j)
+                document.getElementsByClassName("ep")[i].innerHTML +=(count < 1 ? "<br>" + j.episode :  j.episode)+ ip + " " +j.name + "<br>"
+                count++
+            });
         })
         this.styles()
 }

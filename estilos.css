@@ -67,15 +67,20 @@ body{
     color: white;
     margin: 10px;
     font-family: Arial;
-    background-color: black;
+    font-size: 25px;
     width: 28%;
     padding: 20px;
-    box-shadow: 0 0 5px black ;
+    background-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 0 black ;
     transition: 300ms all ease;
     border-radius: 10px;
     cursor: pointer;
 }
-.imagen:hover {
+.tag:hover{
+    box-shadow: 10px 10px 3px black ;
+
+}
+.imagen {
     transition: 300ms all ease;
     -webkit-transform: rotateY(180deg);
     -webkit-transform-style: preserve-3d;
@@ -95,8 +100,12 @@ body{
 .id{
     display: block;
 }
+.ap{
+    transform: rotateY(-180deg);
+}
 .id_hidden{
     display: none;
+    
 }
 #parametros{
     width: 100%;
