@@ -76,7 +76,7 @@ body{
     cursor: pointer;
 }
 .imagen:hover {
-    transition: 700ms all ease;
+    transition: 300ms all ease;
     -webkit-transform: rotateY(180deg);
     -webkit-transform-style: preserve-3d;
     transform: rotateY(180deg);
@@ -90,6 +90,13 @@ body{
 }
 .title-img img{
     width: 50%;
+}
+
+.id{
+    display: block;
+}
+.id_hidden{
+    display: none;
 }
 #parametros{
     width: 100%;

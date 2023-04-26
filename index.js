@@ -6,17 +6,31 @@ Api.prototype.styles = function(){
     let tag = document.querySelectorAll(".tag")
     let tags = [...tag]
     tags.map(e => {
-        e.className = "tag"
+        let hid = e.querySelector(".id_hidden");
+        let id = e.querySelector(".id");
+        e.className = "tag";
         e.addEventListener("click", () => {
-            if(e.className.split(" ").indexOf("imagen") != -1){
-                e.className = "tag";
+              if(hid.className == "id"){
+                hid.className = "id_hidden";
+                id.className = "id"
             }
             else{
-                e.className += " imagen";
+                hid.className = "id";
+                id.className = "id_hidden"
             }
+            if(e.className.split(" ").indexOf("imagen") != -1){
+                e.className = "tag";
+                }
+             else{
+                e.className += " imagen";
+            } 
+          
         })
         e.addEventListener("mouseout", () => {
             e.className = "tag";
+            hid.className = "id_hidden";
+            id.className = "id"
+            
         })
     })
 }
@@ -34,13 +48,17 @@ Api.prototype.Get = async function(){
             json.results.map(e => {
             this.pag.innerHTML += `<div class = 'tag'> 
             <div class = 'id'>
-            ${e["id"]}
+                ${e["id"]}
+                <div class = "name">
+                ${e["name"]} </div>
+                <img src = "${e["image"]}" style = "width:100%; border-radius:20px">
+                status: ${e["status"]}<br> 
+                Specie: ${e["species"]}
             </div>
-            <div class = "name">
-            ${e["name"]} </div>
-            <img src = "${e["image"]}" style = "width:100%; border-radius:20px">
-            status: ${e["status"]}<br> 
-            Specie: ${e["species"]}`;
+            <div class = "id_hidden" >
+                jaslkdjask
+            </div>
+            `;
         })
         this.styles()
         })
@@ -51,13 +69,18 @@ Api.prototype.init = async function(page = 1){
             json.results.map(e => {
             this.pag.innerHTML += `<div class = 'tag'> 
             <div class = 'id'>
-            ${e["id"]}
+                ${e["id"]}
+                <div class = "name">
+                ${e["name"]} </div>
+                <img src = "${e["image"]}" style = "width:100%; border-radius:20px">
+                status: ${e["status"]}<br> 
+                Specie: ${e["species"]}
             </div>
-            <div class = "name">
-            ${e["name"]} </div>
-            <img src = "${e["image"]}" style = "width:100%; border-radius:20px">
-            status: ${e["status"]}<br> 
-            Specie: ${e["species"]}`;
+            <div class = "id_hidden">
+                jaslkdjask
+            </div>
+            `;
+
         })
         this.styles()
 }
@@ -75,7 +98,7 @@ Api.prototype.title =  function(){
             setTimeout(() => {
                 gif.style.opacity = "0";
                 tit.style.opacity = "1";
-            }, 4000);
+            }, 3000);
         }
     })
 }
