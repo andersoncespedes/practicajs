@@ -10,7 +10,7 @@ Api.prototype.styles = function(){
         let id = e.querySelector(".id");
         e.className = "tag";
         e.addEventListener("click", () => {
-              if(hid.className == "id ap"){
+            if(hid.className == "id ap"){
                 hid.className = "id_hidden";
                 id.className = "id"
             }

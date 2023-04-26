@@ -20,6 +20,7 @@ body{
     height: 35px;
     width: 40%;
     border-radius: 10px;
+    padding: 10px;
 }
 #gif-ap{
     position:absolute;
@@ -77,7 +78,7 @@ body{
     cursor: pointer;
 }
 .tag:hover{
-    box-shadow: 10px 10px 3px black ;
+    box-shadow: 10px 10px 0 black ;
 
 }
 .imagen {
