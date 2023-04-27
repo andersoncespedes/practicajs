@@ -1,6 +1,7 @@
 function Api(param){
     this.api = param.api
     this.pag = document.getElementById(param.pag);
+    this.filter = document.getElementById(param.filter);
 }
 Api.prototype.styles = function(){
     let tag = document.querySelectorAll(".tag")
@@ -29,7 +30,22 @@ Api.prototype.styles = function(){
         })
     })
 }
-
+Api.prototype.filt = function(param){
+    let keys = Object.keys(param).filter(e => !/image|location|created|url|id|episode/.test(e));
+    let parent = this.filter;
+    parent.innerHTML = ""
+    keys.map(e => {
+    
+    let select = document.createElement("select");
+    select.className = "selector"
+    
+    parent.appendChild(select);
+        var option = document.createElement("option");
+        option.value = e;
+        option.text = e;
+        select.appendChild(option);
+    })
+}
 Api.prototype.Get = async function(){
         let search = document.getElementById("search")
         let api = this.api;
@@ -41,11 +57,9 @@ Api.prototype.Get = async function(){
             if(search.value.length >= 1){
                 search.style.backgroundColor = "white";
                 search.style.color = "black";
-
             } 
             else{
                 search.style.backgroundColor = "rgba(0, 0, 0, 0.1)";
-
             }
             var data = await fetch(api+"?name="+search.value);
             var json = await data.json();
@@ -81,8 +95,10 @@ Api.prototype.Get = async function(){
 Api.prototype.init = async function(page = 1){
     var data = await fetch(this.api + "?page="+page);
             var json = await data.json();
+            this.filt(...json.results)
             json.results.map(async (e,i) => {
             var arr = ""
+            
             this.pag.innerHTML += `
             <div class = 'tag'> 
                 <div class = 'id'>
@@ -117,7 +133,6 @@ Api.prototype.title =  function(){
 
     tit.addEventListener("click", () => {
         count++;
-        console.log(count)
         if(count > 5){
             gif.style.opacity = "1";
             tit.style.opacity = "0";
@@ -160,5 +175,5 @@ Api.prototype.up = async function(){
     }
     
 } 
-const api = new Api({api:"https://rickandmortyapi.com/api/character", pag:"parametros"});
+const api = new Api({api:"https://rickandmortyapi.com/api/character", pag:"parametros", filter:"filtros"});
 api.up()

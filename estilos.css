@@ -23,7 +23,19 @@ body{
     border-radius: 10px;
     padding: 10px;
 }
-
+.selector{
+   padding: 0.7rem;
+   margin-right: 0.7rem;
+   background-color: #007de43d;
+   color: white;
+   border: none;
+   
+}
+#filtros{
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
 #gif-ap{
     position:absolute;
     left: 800px;
