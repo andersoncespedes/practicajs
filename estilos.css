@@ -6,7 +6,7 @@ body{
     display: flex;
     flex-wrap: wrap;
     font-family: Arial;
-    background: linear-gradient(to top right, rgb(255, 251, 0),rgb(0, 183, 255) );
+    background: linear-gradient(to  right, rgb(255, 251, 0),rgb(0, 247, 255) );
 }
 .buscador{
     width: 100%;
@@ -19,21 +19,23 @@ body{
     color: white;
     height: 35px;
     width: 40%;
+    transition: 100ms all ease;
     border-radius: 10px;
     padding: 10px;
 }
+
 #gif-ap{
     position:absolute;
     left: 800px;
     height: 300px;
     width: 300px;
     opacity: 0;
-    transition: 800ms all ease;
+    transition: 300ms all ease;
 }
 .title{
     padding: 10px;
     font-size: 46px;
-    transition: 800ms all ease;
+    transition: 2s all ease;
 }
 .btn-cont{
     width: 100%;
@@ -54,6 +56,7 @@ body{
 .btn-cont #left{
     transform: skew(20deg);
     background: rgb(122, 10, 10);
+    display: none;
     
 }
 .btn-cont #right{
@@ -79,7 +82,13 @@ body{
 }
 .tag:hover{
     box-shadow: 10px 10px 0 black ;
-
+    background:linear-gradient(-45deg,#007de4, #00d4a3, #fbff2a,#fd0606 ) ;
+    background-size: 400% 400%;
+    animation: gradient 5s ease infinite;
+    color: black;
+}
+hr{
+    border:none;
 }
 .imagen {
     transition: 300ms all ease;
@@ -87,6 +96,11 @@ body{
     -webkit-transform-style: preserve-3d;
     transform: rotateY(180deg);
     transform-style: preserve-3d;
+}
+
+.imagen.tag:hover{
+    
+    box-shadow: -10px 10px 0 black ;
 }
 .title-img{
     width: 80%;
@@ -100,13 +114,13 @@ body{
 
 .id{
     display: block;
+    
 }
 .ap{
     transform: rotateY(-180deg);
 }
 .id_hidden{
     display: none;
-    
 }
 #parametros{
     width: 100%;
@@ -115,4 +129,15 @@ body{
     width: 80%;
     margin: auto;
     transition: 300ms all ease;
+}
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }

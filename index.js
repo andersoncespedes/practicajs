@@ -29,6 +29,7 @@ Api.prototype.styles = function(){
         })
     })
 }
+
 Api.prototype.Get = async function(){
         let search = document.getElementById("search")
         let api = this.api;
@@ -37,7 +38,15 @@ Api.prototype.Get = async function(){
         })
         search.addEventListener("keyup", async(ev) => {
             this.pag.innerHTML = ""
-            console.log(search.value)
+            if(search.value.length >= 1){
+                search.style.backgroundColor = "white";
+                search.style.color = "black";
+
+            } 
+            else{
+                search.style.backgroundColor = "rgba(0, 0, 0, 0.1)";
+
+            }
             var data = await fetch(api+"?name="+search.value);
             var json = await data.json();
             json.results.map(async (e, i) => {
@@ -48,19 +57,21 @@ Api.prototype.Get = async function(){
                     <div class = "name">
                     ${e["name"]} </div>
                     <hr>
-                    <img src = "${e["image"]}" style = "width:100%; border-radius:20px">
+                    <img src = "${e["image"]}" style = "width:100%; border-radius:20px; border:3px solid white;">
                     status: ${e["status"]}<br> 
                     Specie: ${e["species"]}
                 </div>
                 <span class = "id_hidden" >
-                    episodes:<span class = "ep"></span>
+                    Episodios:<span class = "ep"></span>
                 </div>
             </div>
             `;
+            let count = 0;
             e["episode"].map( async (e,ip) => {
                 let arr = await fetch(e);
                 let j = await arr.json()
-                document.getElementsByClassName("ep")[i].innerHTML +="<br>"+ ip + " " +j.name + "<br>"
+                document.getElementsByClassName("ep")[i].innerHTML +=(count < 1 ? "<br>" + j.episode :  j.episode)+ ip + " " +j.name + "<br>"
+                count++
             });
         })
         this.styles()   
@@ -72,7 +83,6 @@ Api.prototype.init = async function(page = 1){
             var json = await data.json();
             json.results.map(async (e,i) => {
             var arr = ""
-            console.log(e.species)
             this.pag.innerHTML += `
             <div class = 'tag'> 
                 <div class = 'id'>
@@ -81,12 +91,12 @@ Api.prototype.init = async function(page = 1){
                     <div class = "name">
                     ${e["name"]} </div>
                     
-                    <img src = "${e["image"]}" style = "width:100%; border-radius:20px">
+                    <img src = "${e["image"]}" style = "width:100%; border-radius:20px; border:3px solid black;">
                     Status: ${e["status"]}<br> 
                     Specie: ${e["species"]}
                 </div>
                 <div class = "id_hidden">
-                    episodes:<span class = "ep"></span>
+                    Episodios:<span class = "ep"></span>
                 </div>
             </div>
             `;
@@ -94,7 +104,6 @@ Api.prototype.init = async function(page = 1){
             e["episode"].map( async (e,ip) => {
                 let arr = await fetch(e);
                 let j = await arr.json()
-                console.log(j)
                 document.getElementsByClassName("ep")[i].innerHTML +=(count < 1 ? "<br>" + j.episode :  j.episode)+ ip + " " +j.name + "<br>"
                 count++
             });
@@ -104,7 +113,8 @@ Api.prototype.init = async function(page = 1){
 Api.prototype.title =  function(){
     let tit = document.getElementById("tit");
     let gif = document.getElementById("gif-ap");
-    let count = 0
+    let count = 0;
+
     tit.addEventListener("click", () => {
         count++;
         console.log(count)
@@ -128,6 +138,10 @@ Api.prototype.up = async function(){
         right.addEventListener("click",() => {
             this.pag.innerHTML = ""
             index++;
+            if(index > 1){
+                left.style.display = "inline";
+
+            }
             this.init(index);
         })
         left.addEventListener("click", () => {
@@ -135,6 +149,7 @@ Api.prototype.up = async function(){
             index--;
             if(index <= 1){
                 index = 1;
+                left.style.display = "none";
             }
             this.init(index);
         })
