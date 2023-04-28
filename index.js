@@ -2,6 +2,10 @@ function Api(param){
     this.api = param.api
     this.pag = document.getElementById(param.pag);
     this.filter = document.getElementById(param.filter);
+    this.barFilt = {
+        name:"",
+        status:""
+    }
 }
 Api.prototype.styles = function(){
     let tag = document.querySelectorAll(".tag")
@@ -30,20 +34,83 @@ Api.prototype.styles = function(){
         })
     })
 }
+Api.prototype.generacionFilter = async function(param){
+    let api = this.api;
+    var data = await fetch(api+"?name="+param.name+"&status="+param.status);
+    var json = await data.json();
+    this.pag.innerHTML = ""
+    json.results.map(async (e, i) => {
+        this.pag.innerHTML += `
+        <div class = 'tag'> 
+            <div class = 'id'>
+                ${e["id"]}
+                <div class = "name">
+                ${e["name"]} </div>
+                <hr>
+                <img src = "${e["image"]}" style = "width:100%; border-radius:20px; border:3px solid white;">
+                status: ${e["status"]}<br> 
+                Specie: ${e["species"]}
+            </div>
+            <span class = "id_hidden" >
+                Episodios:<span class = "ep"></span>
+            </div>
+        </div>
+        `;
+        let count = 0;
+        e["episode"].map( async (e,ip) => {
+            let arr = await fetch(e);
+            let j = await arr.json()
+            document.getElementsByClassName("ep")[i].innerHTML +=(count < 1 ? "<br>" + j.episode :  j.episode)+ ip + " " +j.name + "<br>"
+            count++
+        });
+    })
+    this.styles()   
+    
+}
+Api.prototype.selecc = function(param, select){
+    let abcd = "abcdefghijklmnopqrstuvwxyz".match(/[a-z]/gi);
+    let status = ["alive", "dead", "unknow"];
+    if(param == "name"){
+        abcd.map(e => {
+            let option = document.createElement("option");
+            option.value = e;
+            option.text = e;
+            select.appendChild(option);
+        })
+    }
+    else if(param === "status"){
+        status.map(e => {
+            let option = document.createElement("option");
+            option.value = e;
+            option.text = e;
+            select.appendChild(option);
+        })
+    }
+}
 Api.prototype.filt = function(param){
     let keys = Object.keys(param).filter(e => !/image|location|created|url|id|episode/.test(e));
     let parent = this.filter;
     parent.innerHTML = ""
     keys.map(e => {
-    
-    let select = document.createElement("select");
-    select.className = "selector"
-    
-    parent.appendChild(select);
-        var option = document.createElement("option");
-        option.value = e;
+        let select = document.createElement("select");
+        select.className = "selector"
+        parent.appendChild(select);
+        let option = document.createElement("option");
+        let bar = this.barFilt;
+        select.addEventListener("change", ev => {
+            if(select[0].value == "status" && select.value != "status"){
+                bar["status"] = select.value;
+            }
+            else if(select[0].value == "name" && select.value != "name"){
+                bar["name"] = select.value
+            }
+            this.generacionFilter(bar);
+        })
         option.text = e;
+        option.value = e;
+        
         select.appendChild(option);
+        this.selecc(e, select)
     })
 }
 Api.prototype.Get = async function(){
@@ -90,15 +157,14 @@ Api.prototype.Get = async function(){
         })
         this.styles()   
         })
-     
 }
+
 Api.prototype.init = async function(page = 1){
     var data = await fetch(this.api + "?page="+page);
-            var json = await data.json();
-            this.filt(...json.results)
-            json.results.map(async (e,i) => {
-            var arr = ""
-            
+    var json = await data.json();
+    this.filt(...json.results)
+    json.results.map(async (e,i) => {
+    var arr = ""
             this.pag.innerHTML += `
             <div class = 'tag'> 
                 <div class = 'id'>
@@ -126,6 +192,7 @@ Api.prototype.init = async function(page = 1){
         })
         this.styles()
 }
+
 Api.prototype.title =  function(){
     let tit = document.getElementById("tit");
     let gif = document.getElementById("gif-ap");
