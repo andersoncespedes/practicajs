@@ -22,6 +22,15 @@ body{
     transition: 100ms all ease;
     border-radius: 10px;
     padding: 10px;
+    margin: 0;
+}
+#buscar{
+    border: none;
+    padding: 10px;
+    height: 35px;
+    transition: 100ms all ease;
+    border-radius: 10px;
+    margin: 0;
 }
 .selector{
    padding: 0.7rem;
@@ -141,6 +150,12 @@ hr{
     width: 80%;
     margin: auto;
     transition: 300ms all ease;
+}
+footer{
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    
 }
 @keyframes gradient {
 	0% {

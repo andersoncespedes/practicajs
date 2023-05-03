@@ -116,18 +116,18 @@ Api.prototype.filt = function(param){
 Api.prototype.Get = async function(){
         let search = document.getElementById("search")
         let api = this.api;
-        search.addEventListener("keydown", async(ev) => {
-        this.pag.innerHTML = ""
-        })
         search.addEventListener("keyup", async(ev) => {
-            this.pag.innerHTML = ""
-            if(search.value.length >= 1){
+        if(search.value.length >= 1){
                 search.style.backgroundColor = "white";
                 search.style.color = "black";
             } 
             else{
                 search.style.backgroundColor = "rgba(0, 0, 0, 0.1)";
             }
+        })
+        let buscar = document.getElementById("buscar")
+        buscar.addEventListener("click", async(ev) => {
+            this.pag.innerHTML = ""
             var data = await fetch(api+"?name="+search.value);
             var json = await data.json();
             json.results.map(async (e, i) => {
