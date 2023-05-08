@@ -7,6 +7,8 @@ body{
     flex-wrap: wrap;
     font-family: Arial;
     background: linear-gradient(to  right, rgb(255, 251, 0),rgb(0, 247, 255) );
+    background-repeat: no-repeat;
+    transition: 300ms all ease;
 }
 .buscador{
     width: 100%;
@@ -90,10 +92,10 @@ body{
 }
 .tag{
     color: white;
-    margin: 10px;
+    margin: 5px;
     font-family: Arial;
     font-size: 25px;
-    width: 28%;
+    width: 20%;
     padding: 20px;
     background-color: rgba(0, 0, 0, 0.3);
     box-shadow: 0 1px 0 black ;
@@ -156,6 +158,29 @@ footer{
     padding: 20px;
     text-align: center;
     
+}
+@media only screen and (max-width: 600px){
+    *{
+        font-size: 12px;
+    }
+    .tag{
+        width: 100%;
+        margin: auto;
+    }
+
+}
+@media only screen and (max-width: 1200px){
+    *{
+        font-size: 12px;
+    }
+    body{
+        background: linear-gradient(to  right, rgb(0, 247, 255) ,rgb(255, 251, 0));
+    background-repeat: no-repeat;
+        
+    }
+    .tag{
+        width: 40%;
+    }
 }
 @keyframes gradient {
 	0% {
